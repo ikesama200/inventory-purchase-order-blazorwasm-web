@@ -1,0 +1,43 @@
+﻿[
+    {
+        "productCode": 1,
+        "productName": "ハードディスク",
+        "categoryId": 1,
+        "categoryName": "パソコンパーツ",
+        "quantity": 10,
+        "lastUpdated": "2025-08-30"
+    },
+    {
+        "productCode": 2,
+        "productName": "SSD",
+        "categoryId": 1,
+        "categoryName": "パソコンパーツ",
+        "quantity": 5,
+        "lastUpdated": "2025-08-31"
+    },
+    {
+        "productCode": 3,
+        "productName": "ネットワークルーター",
+        "categoryId": 2,
+        "categoryName": "ネットワーク機器",
+        "quantity": 1,
+        "lastUpdated": "2025-09-01"
+    },
+    {
+        "productCode": 4,
+        "productName": "メモリ",
+        "categoryId": 1,
+        "categoryName": "パソコンパーツ",
+        "quantity": 2,
+        "lastUpdated": "2024-11-30"
+
+    },
+    {
+        "productCode": 5,
+        "productName": "マウス",
+        "categoryId": 3,
+        "categoryName": "周辺機器",
+        "quantity": 3,
+        "lastUpdated": "2025-06-10"
+    }
+]

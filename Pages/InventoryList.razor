@@ -1,0 +1,69 @@
+﻿@page "/inventoryList"
+@inject HttpClient Http
+
+<PageTitle>在庫一覧</PageTitle>
+
+<h1>在庫一覧</h1>
+
+<p>現在の在庫一覧を表示します。</p>
+
+@if (inventorys == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>商品ID</th>
+                <th>商品名</th>
+                <th>カテゴリID</th>
+                <th>カテゴリ名</th>
+                <th>在庫数</th>
+                <th>最終更新日時</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inventory in inventorys)
+            {
+                <tr>
+                    <td>@inventory.CategoryId</td>
+                    <td>@inventory.CategoryName</td>
+                    <td>@inventory.ProductCode</td>
+                    <td>@inventory.ProductName</td>
+                    <td>@inventory.Quantity</td>
+                    <td>@inventory.LastUpdated.ToShortDateString()</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+    private InventoryListModel[]? inventorys;
+
+    // 初期処理
+    protected override async Task OnInitializedAsync()
+    {
+        inventorys = await Http.GetFromJsonAsync<InventoryListModel[]>("sample-data/inventorys.json");
+    }
+
+    // 在庫一覧のクラス
+    public class InventoryListModel
+    {
+        // 商品ID
+        public int ProductCode { get; set; }
+        // 商品名
+        public string? ProductName { get; set; }
+        // カテゴリID
+        public int CategoryId { get; set; }
+        // カテゴリ名
+        public string? CategoryName { get; set; }
+        // 在庫数
+        public int Quantity { get; set; }
+        // 最終更新日時
+        public DateOnly LastUpdated { get; set; }
+    }
+}
