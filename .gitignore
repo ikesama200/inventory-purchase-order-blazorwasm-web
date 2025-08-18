@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ビルド出力
+bin/
+obj/
+out/
+
+# ASP.NET / Blazor
+wwwroot/_framework/
+wwwroot/_bin/
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Node / npm（必要に応じて）
+node_modules/
+
+# その他
+*.log
+*.vsix
+*.nupkg
