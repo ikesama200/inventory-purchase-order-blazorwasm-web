@@ -1,0 +1,65 @@
+﻿
+@page "/purchase-order"
+
+<!-- <h3>発注書入力</h3> -->
+<h3>入力情報テスト</h3>
+
+<!-- 1行テキストボックス -->
+<div class="mb-2">
+    <label>名前: </label>
+    <InputText @bind-Value="name" class="form-control" />
+</div>
+
+<!-- ボタン -->
+<div class="mb-2">
+    <button class="btn btn-primary" @onclick="Submit">送信</button>
+    <span class="ms-2">@message</span>
+</div>
+
+<!-- ドロップダウン（select） -->
+<div class="mb-2">
+    <label>在庫ステータス: </label>
+    <select class="form-select" @bind="selectedStatus">
+        @foreach (var s in StatusOptions)
+        {
+            <option value="@s">@s</option>
+        }
+    </select>
+    <div class="small text-muted">選択中: @selectedStatus</div>
+</div>
+
+<!-- コンボボックス風（入力＋候補: datalist を使用） -->
+<div class="mb-2">
+    <label>商品名（候補から選択可）: </label>
+    <input class="form-control" list="productList" @bind="productName" />
+    <datalist id="productList">
+        @foreach (var p in ProductCandidates)
+        {
+            <option value="@p"></option>
+        }
+    </datalist>
+    <div class="small text-muted">入力値: @productName</div>
+</div>
+@code {
+    // 1行テキストボックス用
+    private string name = string.Empty;
+
+    // ボタン押下時のメッセージ
+    private string message = string.Empty;
+
+    // ドロップダウン用
+    private string selectedStatus = "在庫あり";
+    private readonly string[] StatusOptions =
+        new[] { "在庫あり", "在庫僅少", "在庫なし", "入荷予定" };
+
+    // コンボボックス（datalist）用
+    private string productName = string.Empty;
+    private readonly string[] ProductCandidates =
+        new[] { "りんご", "みかん", "バナナ", "ぶどう", "メロン" };
+
+    private void Submit()
+    {
+        message = $"[{name}] / 状態: {selectedStatus} / 商品: {productName}";
+    }
+
+}
