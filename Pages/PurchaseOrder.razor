@@ -1,5 +1,6 @@
 ﻿
 @page "/purchase-order"
+@inject HttpClient Http
 
 <!-- <h3>発注書入力</h3> -->
 <h3>入力情報テスト</h3>
@@ -12,7 +13,7 @@
 
 <!-- ボタン -->
 <div class="mb-2">
-    <button class="btn btn-primary" @onclick="Submit">送信</button>
+    <button class="btn btn-primary" @onclick="SubmitLocal">送信</button>
     <span class="ms-2">@message</span>
 </div>
 
@@ -40,12 +41,32 @@
     </datalist>
     <div class="small text-muted">入力値: @productName</div>
 </div>
+
+<!-- 送信用ボタン -->
+<div class="mb-2">
+    <button class="btn btn-primary" @onclick="Submit">送信</button>
+</div>
+
+<div>
+    <strong>サーバー応答:</strong> @responseMessage
+</div>
+
 @code {
+
+    public class InventoryRequest
+    {
+        public string? Name { get; set; }
+        public string? Status { get; set; }
+        public string? ProductName { get; set; }
+    }
+
     // 1行テキストボックス用
     private string name = string.Empty;
 
     // ボタン押下時のメッセージ
     private string message = string.Empty;
+
+    private string responseMessage = "";
 
     // ドロップダウン用
     private string selectedStatus = "在庫あり";
@@ -57,9 +78,41 @@
     private readonly string[] ProductCandidates =
         new[] { "りんご", "みかん", "バナナ", "ぶどう", "メロン" };
 
-    private void Submit()
+    private void SubmitLocal()
     {
         message = $"[{name}] / 状態: {selectedStatus} / 商品: {productName}";
     }
 
+    private async Task Submit()
+    {
+        // 入力値をモデルにまとめる
+        var request = new InventoryRequest
+        {
+            Name = name,
+            Status = selectedStatus,
+            ProductName = productName
+        };
+
+        try
+        {
+            // WebAPIにPOSTする
+            <!-- 
+            var response = await Http.PostAsJsonAsync("https://192.168.2.220/hello", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // レスポンスを文字列として取得
+                responseMessage = await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                responseMessage = $"エラー: {response.StatusCode}";
+            }
+            -->
+        }
+        catch (Exception ex)
+        {
+            responseMessage = $"通信エラー: {ex.Message}";
+        }
+    }
 }
