@@ -28,12 +28,13 @@ else
             @foreach (var inventory in inventorys)
             {
                 <tr>
-                    <td>@inventory.CategoryId</td>
-                    <td>@inventory.CategoryName</td>
-                    <td>@inventory.ProductCode</td>
-                    <td>@inventory.ProductName</td>
-                    <td>@inventory.Quantity</td>
-                    <td>@inventory.LastUpdated.ToShortDateString()</td>
+                    <td>@inventory.category_id</td>
+                    <td>@inventory.category_name</td>
+                    <td>@inventory.product_code</td>
+                    <td>@inventory.product_name</td>
+                    <td>@inventory.quantity</td>
+                    <td>@inventory.last_updated</td>
+
                 </tr>
             }
 
@@ -48,22 +49,31 @@ else
     protected override async Task OnInitializedAsync()
     {
         inventorys = await Http.GetFromJsonAsync<InventoryListModel[]>("sample-data/inventorys.json");
+
+        //inventorys = await Http.GetFromJsonAsync<InventoryListModel[]>("http://192.168.2.220:8080/get-inventory-list");
+
+        /*
+        var response = await Http.GetAsync("http://192.168.2.220:8080/get-inventory-list");
+        Console.WriteLine($"Status Code: {response.StatusCode}");
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("Response Body: " + content);
+        */
     }
 
     // 在庫一覧のクラス
     public class InventoryListModel
     {
         // 商品ID
-        public int ProductCode { get; set; }
+        public string? product_code { get; set; }
         // 商品名
-        public string? ProductName { get; set; }
+        public string? product_name { get; set; }
         // カテゴリID
-        public int CategoryId { get; set; }
+        public string? category_id { get; set; }
         // カテゴリ名
-        public string? CategoryName { get; set; }
+        public string? category_name { get; set; }
         // 在庫数
-        public int Quantity { get; set; }
+        public string? quantity { get; set; }
         // 最終更新日時
-        public DateOnly LastUpdated { get; set; }
+        public string? last_updated { get; set; }
     }
 }
